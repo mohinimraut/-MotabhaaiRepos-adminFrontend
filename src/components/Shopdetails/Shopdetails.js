@@ -4,6 +4,9 @@ import Select from "react-select";
 
 import "./Shopdetails.css";
 const baseurl='http://206.189.138.155:5000/'
+// const baseurl='http://localhost:5000/'
+
+
 class Shopdetails extends React.Component {
   state = {
     shopid: "",
@@ -117,6 +120,8 @@ class Shopdetails extends React.Component {
   handleChangeCategory = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  
 
   handleChangeDen = (e) => {
     console.log(e);

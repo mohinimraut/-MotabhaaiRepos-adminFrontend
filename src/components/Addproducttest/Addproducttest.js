@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Addproductutest.css";
 import "./ProductDetails.css";
 const baseurl='http://206.189.138.155:5000/'
+// const baseurl='http://localhost:5000/'
 export default class Addproducttest extends React.Component {
   constructor(props) {
     super(props);
@@ -10,8 +11,10 @@ export default class Addproducttest extends React.Component {
       shopname: "",
       shopaddress: "",
       productcostprice: "",
-      productsellingprice: "",
+      productsellingprice:"",
       productcategory: "",
+      productsubcategory:"",
+      description:"",
       myproducts: [{ _id: 1, productname: "loading" }],
       todos:[],
         product_details:[]
@@ -32,19 +35,15 @@ export default class Addproducttest extends React.Component {
   }
   handleSubmit6(e) {
     e.preventDefault();
+   alert(e)
     const shopname = this.state.shopname;
-
    
-
-  
-
     var data = new URLSearchParams();
-
-   
+  
 
     for (const pair of new FormData(e.target)) {
     
-      data.append(pair[0], pair[1]);
+      data.append(pair[0],pair[1]);
     }
    
     fetch(baseurl+"addPro", {
@@ -52,6 +51,8 @@ export default class Addproducttest extends React.Component {
       body: data,
       shopname: this.state.shopname,
       _id: this.state._id,
+      
+
     })
       .then((res) => res.json())
       .then((res2) => {
@@ -94,6 +95,7 @@ export default class Addproducttest extends React.Component {
     })
     
   }
+ 
   selectProducts(e){
    
      this.setState({product_details:e.product_details})
@@ -102,6 +104,7 @@ export default class Addproducttest extends React.Component {
    moveProductDetail = () => {
     this.props.history.push("/shopdetails");
   };
+  
   render() {
     return (
       <div class="container" id="addproductcontainer">
@@ -164,11 +167,29 @@ export default class Addproducttest extends React.Component {
                 this.setState({ productcategory: e.target.value })
               }
             />
+             <input
+              type="text"
+              name="productsubcategory"
+              placeholder="Subcategory"
+              value={this.state.productsubcategory}
+              onChange={(e) =>this.setState({ productsubcategory: e.target.value })}                              
+             />
 
+             <input
+              type="text"
+              name="description"
+              placeholder="description"
+              value={this.state.description}
+              onChange={(e) => this.setState({ description: e.target.value })}
+            />
+
+
+            
             <button
               type="submit"
               className="waves-effect waves-light btn"
               id="btnaddprdct"
+              
             >
               <p id="addtextbtn">Add</p>
             </button>
@@ -239,9 +260,11 @@ export default class Addproducttest extends React.Component {
     <tr>
         
       <th id="pdname">Name</th>
-      <th id="pdname">Cost_Price</th>
+      <th id="pdname">Costprice</th>
       <th id="pdname">Category</th>
-      <th id="pdname">Selling_Price</th>
+      <th id="pdname">Subcategory</th>
+      <th id="pdname">Sellprice</th>
+      <th id="pdname">DES</th>
     </tr>
   </thead>
   <tbody>
@@ -249,8 +272,9 @@ export default class Addproducttest extends React.Component {
       <td id="pdnametd">{item.productname}</td>
       <td id="pdnametd">{item.productcostprice}</td>
       <td id="pdnametd">{item.productcategory}</td>
+      <td id="pdnametd">{item.productsubcategory}</td>
       <td id="pdnametd">{item.productsellingprice}</td>
-      
+      <td id="pdnametd">{item.description}</td>
     </tr>
   
   </tbody>
